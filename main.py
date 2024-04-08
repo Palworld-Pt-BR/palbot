@@ -20,7 +20,7 @@ __________        .__ ___.           __
                 \/         \/             
     """
     print(ascii_art)
-    print(f"{bot.user} is ready! Created by koz")
+    print(f"{bot.user} está pronto! Criado por koz")
     activity = nextcord.Activity(
         type=nextcord.ActivityType.playing, name=settings.bot_activity
     )
@@ -30,15 +30,15 @@ __________        .__ ___.           __
 @bot.event
 async def on_command_error(ctx, error):
     if isinstance(error, commands.CommandNotFound):
-        await ctx.send("This command does not exist.")
+        await ctx.send("Este comando não existe.")
     elif isinstance(error, commands.MissingPermissions):
-        await ctx.send("You don't have the required permissions to use this command.")
+        await ctx.send("Você não tem as permissões necessárias para usar este comando.")
     elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("You are missing a required argument.")
+        await ctx.send("Está faltando um parâmetro obrigatório.")
     elif isinstance(error, commands.CommandOnCooldown):
-        await ctx.send("This command is on cooldown. Please try again later.")
+        await ctx.send("Este comando está em recarga. Por favor, tente novamente mais tarde.")
     else:
-        await ctx.send(f"An error occured: {error}")
+        await ctx.send(f"Ocorreu um erro: {error}")
 
 @bot.command()
 async def ping(ctx):

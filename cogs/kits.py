@@ -27,18 +27,18 @@ class KitsCog(commands.Cog):
 
     @nextcord.slash_command(
         name="kit",
-        description="Give a kit to a player.",
+        description="Dar um kit a um jogador",
         default_member_permissions=nextcord.Permissions(administrator=True),
     )
     async def givekit(
         self,
         interaction: nextcord.Interaction,
-        steamid: str = nextcord.SlashOption(description="SteamID/UID of the player."),
+        steamid: str = nextcord.SlashOption(description="SteamID/UID do jogador."),
         kit_name: str = nextcord.SlashOption(
-            description="The name of the kit.", autocomplete=True
+            description="O nome do kit.", autocomplete=True
         ),
         server: str = nextcord.SlashOption(
-            description="Select a server", autocomplete=True
+            description="Selecionar um servidor", autocomplete=True
         ),
     ):
         await interaction.response.defer()
@@ -49,7 +49,7 @@ class KitsCog(commands.Cog):
 
         package = kits.get(kit_name)
         if not package:
-            await interaction.followup.send("Kit not found.", ephemeral=True)
+            await interaction.followup.send("Kit não encontrado.", ephemeral=True)
             return
 
         for command_template in package["commands"]:
@@ -58,9 +58,9 @@ class KitsCog(commands.Cog):
             await asyncio.sleep(1)
 
         embed = nextcord.Embed(
-            title=f"Package Delivery - {server}", color=nextcord.Color.green()
+            title=f"Entrega de Pacote - {server}", color=nextcord.Color.green()
         )
-        embed.description = f"Delivering {kit_name} kit to {steamid}."
+        embed.description = f"Entregando {kit_name} kit para {steamid}."
         await interaction.followup.send(embed=embed)
 
     @givekit.on_autocomplete("server")

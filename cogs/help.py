@@ -11,12 +11,12 @@ class HelpView(View):
 
     async def generate_help_embed(self):
         embed = nextcord.Embed(
-            title="Help Menu",
-            description="List of all available commands.",
+            title="Menu de Ajuda",
+            description="Lista de todos os comandos disponíveis.",
             color=nextcord.Color.blue(),
         )
         embed.set_footer(
-            text=f"{constants.FOOTER_TEXT}: Page {self.current_page + 1}",
+            text=f"{constants.FOOTER_TEXT}: Página {self.current_page + 1}",
             icon_url=constants.FOOTER_IMAGE,
         )
 
@@ -31,18 +31,18 @@ class HelpView(View):
         for command in commands[start:end]:
             embed.add_field(
                 name=f"`/{command.name}`",
-                value=command.description or "No description",
+                value=command.description or "Sem descrição",
                 inline=True,
             )
         return embed
 
-    @nextcord.ui.button(label="Previous", style=nextcord.ButtonStyle.blurple)
+    @nextcord.ui.button(label="Anterior", style=nextcord.ButtonStyle.blurple)
     async def previous_button_callback(self, button, interaction):
         if self.current_page > 0:
             self.current_page -= 1
             await self.update_help_message(interaction)
 
-    @nextcord.ui.button(label="Next", style=nextcord.ButtonStyle.blurple)
+    @nextcord.ui.button(label="Próxima", style=nextcord.ButtonStyle.blurple)
     async def next_button_callback(self, button, interaction):
         if (self.current_page + 1) * 9 < len(
             self.bot.all_slash_commands
@@ -61,33 +61,33 @@ class HelpCog(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @nextcord.slash_command(description="Shows a list of available commands.")
+    @nextcord.slash_command(description="Mostra uma lista de comandos disponíveis.")
     async def help(self, interaction: nextcord.Interaction):
         view = HelpView(self.bot)
         embed = await view.generate_help_embed()
         await interaction.response.send_message(embed=embed, view=view, ephemeral=True)
 
-    # Please do not remove the about me section. I've spent a lot of time on this bot and I would appreciate it if you left it in.
-    @nextcord.slash_command(description="Information about the Palworld bot.")
+    # Por favor, não remova a seção sobre mim. Eu passei muito tempo neste bot e eu ficaria grato se você deixasse ela.
+    @nextcord.slash_command(description="Informações sobre o bot do Palworld.")
     async def about(self, interaction: nextcord.Interaction):
 
         embed = nextcord.Embed(
-            title="Palworld Bot", color=nextcord.Color.blue(), url=constants.TITLE_URL
+            title="Bot do Palworld", color=nextcord.Color.blue(), url=constants.TITLE_URL
         )
         embed.set_footer(text=constants.FOOTER_TEXT, icon_url=constants.FOOTER_IMAGE)
         embed.add_field(
-            name="About",
-            value="The bot is an open-source project available [here](https://github.com/dkoz/palworld-bot). You can find more info on our readme. I'm always looking for code contributions and support! If there is something wrong with the bot itself, please let me know!",
+            name="Sobre",
+            value="O bot é um projeto de código aberto disponível [aqui](https://github.com/dkoz/palworld-bot). Você pode encontrar mais informações no nosso readme. Estou sempre procurando contribuições de código e suporte! Se houver algo errado com o bot em si, por favor, me avise",
             inline=False,
         )
         embed.add_field(
-            name="Creator",
-            value="This bot was created by [Kozejin](https://kozejin.dev). Feel free to add `koz#1337` on discord if you have any questions.",
+            name="Criador",
+            value="Este bot foi criado por [Kozejin](https://kozejin.dev). Sinta-se à vontade para adicionar `koz#1337` no Discord se tiver alguma dúvida.",
             inline=False,
         )
         embed.add_field(
-            name="Support",
-            value="If you wish to support the bot, you can join our [Discord](https://discord.gg/3HUq8cJSrX).",
+            name="Apoiar",
+            value="Se desejar apoiar o bot, você pode se juntar ao nosso [Discord](https://discord.gg/3HUq8cJSrX).",
             inline=False,
         )
 
@@ -102,7 +102,7 @@ class HelpCog(commands.Cog):
             style=nextcord.ButtonStyle.link,
         )
         kofi_button = Button(
-            label="Support",
+            label="Apoiar",
             url="https://ko-fi.com/kozejin",
             style=nextcord.ButtonStyle.link,
         )

@@ -25,7 +25,7 @@ class ConnectCog(commands.Cog):
             response = await self.rcon_util.rcon_command(server_name, "ShowPlayers")
             return response
         except Exception as e:
-            print(f"Error sending command to {server_name}: {e}")
+            print(f"Erro ao enviar comando para {server_name}: {e}")
             return ""
 
     async def monitor_player_activity(self):
@@ -74,8 +74,8 @@ class ConnectCog(commands.Cog):
             now = datetime.datetime.now()
             timestamp = now.strftime("%m-%d-%Y at %I:%M:%S %p")
             embed = nextcord.Embed(
-                title="Player Joined",
-                description=f"Player joined {server_name}: {player_name} (SteamID: {steamid})",
+                title="Jogador Entrou",
+                description=f"Jogador Entrou {server_name}: {player_name} (SteamID: {steamid})",
                 color=nextcord.Color.blurple(),
             )
             embed.set_footer(text=f"Time: {timestamp}")
@@ -88,8 +88,8 @@ class ConnectCog(commands.Cog):
             now = datetime.datetime.now()
             timestamp = now.strftime("%m-%d-%Y at %I:%M:%S %p")
             embed = nextcord.Embed(
-                title="Player Left",
-                description=f"Player left {server_name}: {player_name} (SteamID: {steamid})",
+                title="Jogador Saiu",
+                description=f"Jogador Saiu {server_name}: {player_name} (SteamID: {steamid})",
                 color=nextcord.Color.red(),
             )
             embed.set_footer(text=f"Time: {timestamp}")

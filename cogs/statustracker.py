@@ -23,16 +23,19 @@ class StatusTracker(commands.Cog):
     async def update_status(self):
         await self.bot.wait_until_ready()
         while not self.bot.is_closed() and self.config.get("STATUS_TRACKING", False):
-            total_players = await self.get_total_players()
-            max_players = sum(
-                server.get("SERVER_SLOTS", 32) for server in self.servers.values()
-            )
-            status_message = f"{total_players}/{max_players} jogadores"
-            await self.bot.change_presence(
-                activity=nextcord.Activity(
-                    type=nextcord.ActivityType.watching, name=status_message
+            try:
+                total_players = await self.get_total_players()
+                max_players = sum(
+                    server.get("SERVER_SLOTS", 32) for server in self.servers.values()
                 )
-            )
+                status_message = f"{total_players}/{max_players} jogadores"
+                await self.bot.change_presence(
+                    activity=nextcord.Activity(
+                        type=nextcord.ActivityType.watching, name=status_message
+                    )
+                )
+            except Exception as e:
+                print(f"Error updating status: {e}")
             await asyncio.sleep(60)
 
     async def get_total_players(self):
@@ -45,7 +48,7 @@ class StatusTracker(commands.Cog):
                 players = self.parse_players(players_output)
                 total_players += len(players)
             except Exception as e:
-                print(f"Falha ao obter a contagem de jogadores para o servidor. '{server_name}': {e}")
+                print(f"Falha ao obter a contagem de jogadores para o servidor '{server_name}': {e}")
         return total_players
 
     def parse_players(self, players_output):

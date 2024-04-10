@@ -66,7 +66,7 @@ class QueryCog(commands.Cog):
                     max_players = server_config.get("SERVER_SLOTS", 32)
 
                     embed = nextcord.Embed(
-                        title=f"{server_name} Status",
+                        title=f"Situação do {server_name}",
                         description=description,
                         color=(
                             nextcord.Color.green()
@@ -74,15 +74,15 @@ class QueryCog(commands.Cog):
                             else nextcord.Color.red()
                         ),
                     )
-                    embed.add_field(name="Status", value=status, inline=True)
-                    embed.add_field(name="Version", value=version, inline=True)
+                    embed.add_field(name="Situação", value=status, inline=True)
+                    embed.add_field(name="Versão", value=version, inline=True)
                     embed.add_field(
-                        name="Players",
+                        name="Jogadores",
                         value=f"{player_count}/{max_players}",
                         inline=False,
                     )
                     embed.add_field(
-                        name="Connection Info",
+                        name="Informações para Conexão",
                         value=f"```{server_config['RCON_HOST']}:{server_config['SERVER_PORT']}```",
                         inline=False,
                     )
@@ -92,12 +92,12 @@ class QueryCog(commands.Cog):
 
                     players_chunks = list(self.split_players(players, 11))
                     players_embed = nextcord.Embed(
-                        title=f"Players Online", color=nextcord.Color.blue()
+                        title=f"Jogadores Online", color=nextcord.Color.blue()
                     )
 
                     for chunk in players_chunks:
                         players_list = (
-                            "\n".join(chunk) if chunk else "No players online."
+                            "\n".join(chunk) if chunk else "Sem jogadores online."
                         )
                         players_embed.add_field(
                             name="\u200b", value=players_list, inline=True
@@ -133,7 +133,7 @@ class QueryCog(commands.Cog):
 
                     self.save_message_ids()
             except Exception as e:
-                print(f"An error occurred: {e}")
+                print(f"Ocorreu um erro: {e}")
             await asyncio.sleep(60)
 
     async def check_server_status(self, server_name):

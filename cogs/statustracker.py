@@ -27,7 +27,7 @@ class StatusTracker(commands.Cog):
             max_players = sum(
                 server.get("SERVER_SLOTS", 32) for server in self.servers.values()
             )
-            status_message = f"{total_players}/{max_players} players"
+            status_message = f"{total_players}/{max_players} jogadores"
             await self.bot.change_presence(
                 activity=nextcord.Activity(
                     type=nextcord.ActivityType.watching, name=status_message
@@ -45,7 +45,7 @@ class StatusTracker(commands.Cog):
                 players = self.parse_players(players_output)
                 total_players += len(players)
             except Exception as e:
-                print(f"Failed to get player count for server '{server_name}': {e}")
+                print(f"Falha ao obter a contagem de jogadores para o servidor. '{server_name}': {e}")
         return total_players
 
     def parse_players(self, players_output):

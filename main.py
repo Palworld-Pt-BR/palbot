@@ -28,17 +28,21 @@ __________        .__ ___.           __
 
 # Error Handling
 @bot.event
-async def on_command_error(ctx, error):
-    if isinstance(error, commands.CommandNotFound):
-        await ctx.send("Este comando não existe.")
-    elif isinstance(error, commands.MissingPermissions):
-        await ctx.send("Você não tem as permissões necessárias para usar este comando.")
-    elif isinstance(error, commands.MissingRequiredArgument):
-        await ctx.send("Está faltando um parâmetro obrigatório.")
+async def on_application_command_error(interaction, error):
+    if isinstance(error, nextcord.NotFound):
+        await interaction.response.send_message("Interação expirada ou não encontrada.", ephemeral=True)
+    elif isinstance(error, nextcord.HTTPException):
+        await interaction.response.send_message("Ocorreu um erro HTTP.", ephemeral=True)
+    elif isinstance(error, nextcord.Forbidden):
+        await interaction.response.send_message("Você não tem permissão para executar esta ação.", ephemeral=True)
     elif isinstance(error, commands.CommandOnCooldown):
-        await ctx.send("Este comando está em recarga. Por favor, tente novamente mais tarde.")
+        await interaction.response.send_message(f"Comando está em tempo de recarga. Por favor, aguarde {error.retry_after:.2f} seconds.", ephemeral=True)
+    elif isinstance(error, commands.MissingPermissions):
+        await interaction.response.send_message("Você não tem as permissões necessárias.", ephemeral=True)
+    elif isinstance(error, commands.MissingRequiredArgument):
+        await interaction.response.send_message("Falta um parâmetro obrigatório", ephemeral=True)
     else:
-        await ctx.send(f"Ocorreu um erro: {error}")
+        await interaction.response.send_message(f"Ocorreu um erro: {str(error)}", ephemeral=True)
 
 @bot.command()
 async def ping(ctx):

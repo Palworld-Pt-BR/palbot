@@ -66,7 +66,7 @@ class QueryCog(commands.Cog):
                     max_players = server_config.get("SERVER_SLOTS", 32)
 
                     embed = nextcord.Embed(
-                        title=f"{server_name}",
+                        title=f"Servidor {server_name}",
                         description=description,
                         color=(
                             nextcord.Color.green()
